@@ -15,7 +15,10 @@ export class OllamaApiService {
       return this._mock()
     }
     return this.httpClient
-      .post<OllamaResponse>(`${environment.API_URL}/api/generate`, payload)
+      .post<OllamaResponse>(`${environment.API_URL}/api/generate`, {
+        ...payload,
+        stream: false,
+      })
       .pipe(
         timeout(environment.API_TIMEOUT),
         catchError(error => {
