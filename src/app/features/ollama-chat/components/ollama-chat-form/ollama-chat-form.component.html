@@ -3,7 +3,7 @@
   [formGroup]="formGroup"
   (submit)="onSubmit()">
   <label class="flex justify-between items-center w-48 px-4 bg-neutral-900 rounded-lg relative"
-    [ngClass]="{'border-dashed border-2 border-green-500': isDragOver()}"
+    [ngClass]="{'border-dashed border-2 border-blue-500': isDragOver()}"
     (dragover)="onDragOver($event)"
     (dragleave)="onDragLeave($event)"
     (drop)="onDrop($event)"
