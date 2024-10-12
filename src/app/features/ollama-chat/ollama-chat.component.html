@@ -1,0 +1,20 @@
+<main class="flex-grow p-4 shadow-md text-neutral-800">
+  @for (answer of context(); track $index) {
+    @if (answer.done) {
+      <app-ollama-chat-answer #listItem [answer]="answer"></app-ollama-chat-answer>
+    } @else {
+      <div
+        #listItem
+        class="bg-neutral-700 text-white rounded-3xl shadow-md mt-4 p-4 max-w-[50%] w-auto ml-auto text-right">
+        <span>{{ answer.response }}</span>
+      </div>
+    }
+  }
+  @if (loading()) {
+    <p class="py-10 text-white">...</p>
+  }
+
+  <app-ollama-chat-error [error]="error()"></app-ollama-chat-error>
+</main>
+
+<app-ollama-chat-form [loading]="loading()" (send)="onSend($event)"></app-ollama-chat-form>

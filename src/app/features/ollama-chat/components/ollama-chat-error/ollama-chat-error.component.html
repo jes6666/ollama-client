@@ -1,0 +1,6 @@
+@if (error()) {
+  <div class="bg-neutral-700 text-white rounded-lg border-4 border-red-700 p-4 mt-4" role="alert">
+    <p class="font-bold">Oops!</p>
+    <p class="break-all">{{ error() | json }}</p>
+  </div>
+}
