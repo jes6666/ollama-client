@@ -6,11 +6,11 @@
     <div class="flex items-center text-sm">
       <span>Model: {{ answer.model }}</span>
       <span class="mx-2">|</span>
-      <span>Duration: {{ answer.total_duration }} ms</span>
+      <span>Duration: {{ answer.total_duration | nanoToSeconds }} s</span>
       <span class="mx-2">|</span>
-      <span>Load Duration: {{ answer.load_duration }} ms</span>
-      <span class="mx-2">|</span>
-      <span>Context IDs: {{ answer.context.slice(0, 10).join(', ') }}</span>
+      <span>Load Duration: {{ answer.load_duration | nanoToSeconds }} s</span>
+      <!-- <span class="mx-2">|</span>
+      <span>Context IDs: {{ answer.context.join(', ') }}</span> -->
     </div>
     <span class="text-sm">{{ answer.created_at | date: 'short' }}</span>
   </div>
