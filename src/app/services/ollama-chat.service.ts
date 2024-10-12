@@ -33,6 +33,7 @@ export class OllamaChatService {
 
     this._ollamaApi.generate(payload).subscribe({
       next: response => {
+        console.log(response)
         this._context.update(context => [...context, response])
         this._loading.set(false)
       },

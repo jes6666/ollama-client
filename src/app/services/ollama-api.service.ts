@@ -37,7 +37,7 @@ export class OllamaApiService {
       created_at: '2022-01-24T00:00:00Z',
       response: 'Hello, world!',
       done: true,
-      context: [0, 1, 2, 3, 4],
+      context: [Math.random(), 1, 2, 3, 4],
       total_duration: 0.0,
       load_duration: 15940230980,
       prompt_eval_count: 0,

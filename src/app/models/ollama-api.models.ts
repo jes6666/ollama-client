@@ -3,6 +3,7 @@ export interface OllamaRequest {
   prompt: string
   images?: string[]
   stream?: boolean
+  context?: number[]
   options?: Partial<{
     num_keep: number
     seed: number

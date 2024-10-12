@@ -37,6 +37,10 @@ export class OllamaChatComponent {
   }
 
   onSend(payload: OllamaRequest) {
-    this.ollamaChat.send(payload)
+    const lastContext = this.context().length > 1 ? this.context().at(-1)?.context : undefined
+    this.ollamaChat.send({
+      ...payload,
+      context: lastContext,
+    })
   }
 }
