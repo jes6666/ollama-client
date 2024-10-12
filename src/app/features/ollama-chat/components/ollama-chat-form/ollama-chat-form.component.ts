@@ -1,4 +1,5 @@
-import { Component, input, output } from '@angular/core'
+import { NgClass } from '@angular/common'
+import { Component, input, output, signal } from '@angular/core'
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms'
 import { OllamaRequest } from '@app/models/ollama-api.models'
 import { environment } from '@env/environment'
@@ -6,17 +7,19 @@ import { environment } from '@env/environment'
 @Component({
   selector: 'app-ollama-chat-form',
   standalone: true,
-  imports: [ReactiveFormsModule],
+  imports: [NgClass, ReactiveFormsModule],
   templateUrl: './ollama-chat-form.component.html',
 })
 export class OllamaChatFormComponent {
   loading = input.required()
   send = output<OllamaRequest>()
+  isDragOver = signal<boolean>(false)
 
   formGroup = new FormGroup({
     prompt: new FormControl<string>('', { nonNullable: true }),
     images: new FormControl<string[]>([], { nonNullable: true }),
   })
+  public imagePath = signal<string | null>('')
 
   onSubmit() {
     const payload: OllamaRequest = {
@@ -26,12 +29,38 @@ export class OllamaChatFormComponent {
     }
     this.send.emit(payload)
     this.formGroup.reset()
+    this.imagePath.set(null)
   }
 
-  onFileSelected(event: Event): void {
-    const input = event.target as HTMLInputElement
-    if (input.files && input.files[0]) {
-      const file = input.files[0]
+  onDragOver(event: DragEvent) {
+    event.preventDefault()
+    this.isDragOver.set(true)
+  }
+
+  onDragLeave(event: DragEvent) {
+    event.preventDefault()
+    this.isDragOver.set(false)
+  }
+
+  onDrop(event: DragEvent) {
+    console.log(event)
+    event.preventDefault()
+    this.isDragOver.set(false)
+    if (event.dataTransfer?.files) {
+      const files = Array.from(event.dataTransfer.files);
+      this.onFileSelected(files)
+    }
+  }
+
+  onRemoveFile() {
+    this.formGroup.controls.images.patchValue([])
+    this.imagePath.set(null)
+  }
+
+  onFileSelected(files: FileList | File[]): void {
+    if (files && files[0]) {
+      const file = files[0]
+      this.imagePath.set(file.name)
       const reader = new FileReader()
 
       reader.onload = () => {

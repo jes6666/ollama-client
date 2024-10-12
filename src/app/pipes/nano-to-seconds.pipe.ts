@@ -6,9 +6,9 @@ import { Pipe, PipeTransform } from '@angular/core';
 })
 export class NanoToSecondsPipe implements PipeTransform {
 
-  transform(value: number): number {
-    if (!value) return 0;
-    return value / 1000000000;
+  transform(value: number): string {
+    if (!value) return 'unknown';
+    return (value / 1e9).toFixed(2);
   }
 
 }

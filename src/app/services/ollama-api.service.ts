@@ -36,7 +36,7 @@ export class OllamaApiService {
       done: true,
       context: [0, 1, 2, 3, 4],
       total_duration: 0.0,
-      load_duration: 0.0,
+      load_duration: 15940230980,
       prompt_eval_count: 0,
       prompt_eval_duration: 0.0,
       eval_count: 0,

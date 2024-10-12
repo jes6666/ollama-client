@@ -2,23 +2,40 @@
   class="sticky bottom-0 bg-neutral-800 flex p-4 space-x-2"
   [formGroup]="formGroup"
   (submit)="onSubmit()">
-  <label
-    class="flex items-center cursor-pointer bg-neutral-300 text-black font-semibold py-2 px-4 rounded-md hover:bg-neutral-400 focus:outline-none focus:ring-2 focus:ring-blue-400">
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      fill="none"
-      viewBox="0 0 24 24"
-      stroke="currentColor"
-      class="w-5 h-5">
-      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
-    </svg>
-    <span class="hidden md:inline ml-2">Attach File</span>
-    <input type="file" class="hidden" (change)="onFileSelected($event)" />
+  <label class="flex justify-between items-center w-48 px-4 bg-neutral-900 rounded-lg relative"
+    [ngClass]="{'border-dashed border-2 border-green-500': isDragOver()}"
+    (dragover)="onDragOver($event)"
+    (dragleave)="onDragLeave($event)"
+    (drop)="onDrop($event)"
+  >
+    @if (imagePath()) {
+      <span class="text-white m-auto overflow-hidden text-ellipsis whitespace-nowrap">{{ imagePath() }}</span>
+      <button type="button" class="flex p-1 ml-1 bg-neutral-300 rounded text-black" (click)="onRemoveFile()">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          class="feather feather-x">
+          <!-- Lines forming the cross -->
+          <line x1="18" y1="6" x2="6" y2="18"></line>
+          <line x1="6" y1="6" x2="18" y2="18"></line>
+        </svg>
+      </button>
+    } @else {
+      <span class="text-gray-400 m-auto">Attachments</span>
+    }
+    <input type="file" class="hidden" (change)="onFileSelected($any($event.target).files)" />
   </label>
   <input
     type="text"
     placeholder="Ask me something"
-    class="flex-grow p-4 bg-neutral-900 text-white rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+    class="flex-grow p-4 bg-neutral-900 placeholder-gray-400 text-white rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
     formControlName="prompt" />
   <button
     class="bg-neutral-300 text-black font-semibold py-2 px-4 rounded-md hover:bg-neutral-400 focus:outline-none focus:ring-2 focus:ring-blue-400"
