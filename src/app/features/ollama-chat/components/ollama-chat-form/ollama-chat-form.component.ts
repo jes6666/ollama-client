@@ -1,6 +1,6 @@
 import { NgClass } from '@angular/common'
 import { Component, input, output, signal } from '@angular/core'
-import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms'
+import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms'
 import { OllamaRequest } from '@app/models/ollama-api.models'
 import { environment } from '@env/environment'
 
@@ -16,7 +16,7 @@ export class OllamaChatFormComponent {
   isDragOver = signal<boolean>(false)
 
   formGroup = new FormGroup({
-    prompt: new FormControl<string>('', { nonNullable: true }),
+    prompt: new FormControl<string>('', { validators: Validators.required, nonNullable: true }),
     images: new FormControl<string[]>([], { nonNullable: true }),
   })
   public imagePath = signal<string | null>('')
@@ -47,7 +47,7 @@ export class OllamaChatFormComponent {
     event.preventDefault()
     this.isDragOver.set(false)
     if (event.dataTransfer?.files) {
-      const files = Array.from(event.dataTransfer.files);
+      const files = Array.from(event.dataTransfer.files)
       this.onFileSelected(files)
     }
   }
